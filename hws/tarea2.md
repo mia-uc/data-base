@@ -4,22 +4,15 @@
 
 ## Diagrama E/R
 
-Antes de mostrar el diagrama entidad relación se muestra una leyenda de la simbología que se usará. En la leyenda se muestran entidades $A_i$ y $B_i$ que ejemplifican cada una de las relaciones posibles. Dichas relaciones presentan la multiplicidad que estas describen en su interior, véase como en el **segundo** ejemplo se relaciona la entidad A2 con la entidad B2 donde se relacionan 0 o n entidades de A2 con 0 o 1 entidad de B2. Lease de forma análoga al ejemplo anterior el resto de las relaciones
+Antes de mostrar el diagrama entidad relación se muestra una leyenda de la simbología que se usará. En la leyenda se muestran entidades Ai y Bi que ejemplifican cada una de las relaciones posibles. Dichas relaciones presentan la multiplicidad que estas describen en su interior, véase como en el **segundo** ejemplo se relaciona la entidad A2 con la entidad B2 donde se relacionan 0 o n entidades de A2 con 0 o 1 entidad de B2. Lease de forma análoga al ejemplo anterior el resto de las relaciones
 
-```mermaid
-classDiagram
-    A1 .. B1 : 0-n a 0-n
-    A2 ..> B2 : 0-n a 0-1
-    A3 ..|> B3 : 0-n a 1-1
-    A4 -- B4 : 1-n a 1-n
-    A5 --> B5 : 1-n a 0-1
-    A6 --|> B6 : 1-n a 1-1
-    A7 <--> B7 : 0-1 a 0-1
-    A8 <--|> B8 : 0-1 a 1-1
-```
+![imag](./1.png)
 
 Cada una de las entidades del diagrama E/R contiene en el interior del recuadro las propiedades de la entidad en cuestión. Para señala las llaves primarias de cada una de las entidades se usa el tag `[PK]`, y para el caso de las llaves foráneas se usa la sintaxis `[FK <nombre de la entidad> <propiedad a la que hace referencia>]`
 
+![imag](2.png)
+
+<!--
 ```mermaid
 classDiagram
     Tienda ..|> Dirección : Esta en
@@ -109,23 +102,66 @@ classDiagram
         peso de la caja
         descripción
     }
-```
+````
+
+-->
 
 ## Esquema Relacional
 
-**Tienda**(tid `int PRIMARY KEY`, teléfono `string`, Comuna.comuna `string`, capacidad de estacionamiento `int`) \
-**Personal**(nombre `string`, rut `string PRIMARY KEY`, edad `int`, genero `string`, la fecha desde inicio `date`, Tienda.tid `int`) \
-**EsDirigidaPor**(Tienda.tid `int PRIMARY KEY`, Personal.rut `string`)\
-**Comuna**(comuna `string PRIMARY KEY`, region `string`)
+**Tienda**( \
+$\space\space$ tid `int PRIMARY KEY`, \
+$\space\space$ teléfono `string`, \
+$\space\space$ Comuna.comuna `string`, \
+$\space\space$ capacidad de estacionamiento `int`) \
+**Personal**( \
+$\space\space$ nombre `string`, \
+$\space\space$ rut `string PRIMARY KEY`, \
+$\space\space$ edad `int`, \
+$\space\space$ genero `string`, \
+$\space\space$ la fecha desde inicio `date`, \
+$\space\space$ Tienda.tid `int`) \
+**EsDirigidaPor**(\
+$\space\space$ Tienda.tid `int PRIMARY KEY`, \
+$\space\space$ Personal.rut `string`)\
+**Comuna**(
+$\space\space$ comuna `string PRIMARY KEY`,\
+$\space\space$ region `string`)
 
-**Producto**(pid `int PRIMARY KEY`, nombre `string`, precio `float`, número de cajas `int`) \
-**Dormitorio**(Producto.pid `int PRIMARY KEY`, tamaño `float`, color `string`, descripción `string`) \
-**Iluminación**(Producto.pid `int PRIMARY KEY`, frecuencia `float`, color `string`, tensión `float`) \
-**Living**(Producto.pid `int PRIMARY KEY`, dimensiones `string`, material `string`, carga `string`)\
-**Caja**(cid `int PRIMARY KEY`, Producto.pid `int`, peso de la caja `float`, descripción `string`)
+**Producto**(
+$\space\space$ pid `int PRIMARY KEY`,\
+$\space\space$ nombre `string`,\
+$\space\space$ precio `float`,\
+$\space\space$ número de cajas `int`) \
+**Dormitorio**(\
+$\space\space$ Producto.pid `int PRIMARY KEY`,\
+$\space\space$ tamaño `float`,\
+$\space\space$ color `string`,\
+$\space\space$ descripción `string`) \
+**Iluminación**(\
+$\space\space$ Producto.pid `int PRIMARY KEY`,\
+$\space\space$ frecuencia `float`,\
+$\space\space$ color `string`,\
+$\space\space$ tensión `float`) \
+**Living**(\
+$\space\space$ Producto.pid `int PRIMARY KEY`,\
+$\space\space$ dimensiones `string`,\
+$\space\space$ material `string`,\
+$\space\space$ carga `string`)\
+**Caja**(\
+$\space\space$ cid `int PRIMARY KEY`,\
+$\space\space$ Producto.pid `int`,\
+$\space\space$ peso de la caja `float`,\
+$\space\space$ descripción `string`)
 
-**Stock**(Tienda.tid `int PRIMARY KEY`, Producto.pid `int PRIMARY KEY`, cantidad `int`) \
-**Oferta**(oid `int PRIMARY KEY`, Tienda.tid `int`, Producto.pid `int`, porcentaje de descuento `float`)
+**Stock**(\
+$\space\space$ Tienda.tid `int PRIMARY KEY`,\
+$\space\space$ Producto.pid `int PRIMARY KEY`,\
+$\space\space$ cantidad `int`) \
+**Oferta**(\
+$\space\space$ oid `int PRIMARY KEY`,\
+$\space\space$ Tienda.tid `int`,\
+$\space\space$ Producto.pid `int`,\
+$\space\space$ porcentaje de descuento `float`)
 
 `Nota`: Nótese que al traducir el diagrama E/R al esquema relacional presenciamos la posibilidad de dos violaciones de las reglas del domino. En la interacción entre las entidades Tienda y Personal, con el esquema relacional presentado podría existir un jefe de una tienda que no trabaje en dicha tienda. Y la entidad Oferta tiene como llaves el id de la Tienda y del Producto, por tanto, es posible crear una oferta para un producto sin Stock.
 
