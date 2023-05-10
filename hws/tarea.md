@@ -6,13 +6,20 @@
 
 Antes de mostrar el diagrama entidad relación se muestra una leyenda de la simbología que se usará. En la leyenda se muestran entidades Ai y Bi que ejemplifican cada una de las relaciones posibles. Dichas relaciones presentan la multiplicidad que estas describen en su interior, véase como en el **segundo** ejemplo se relaciona la entidad A2 con la entidad B2 donde se relacionan 0 o n entidades de A2 con 0 o 1 entidad de B2. Lease de forma análoga al ejemplo anterior el resto de las relaciones
 
-![imag](./1.png)
+```mermaid
+classDiagram
+    A1 .. B1 : 0-n a 0-n
+    A2 ..> B2 : 0-n a 0-1
+    A3 ..|> B3 : 0-n a 1-1
+    A4 -- B4 : 1-n a 1-n
+    A5 --> B5 : 1-n a 0-1
+    A6 --|> B6 : 1-n a 1-1
+    A7 <--> B7 : 0-1 a 0-1
+    A8 <--|> B8 : 0-1 a 1-1
+```
 
 Cada una de las entidades del diagrama E/R contiene en el interior del recuadro las propiedades de la entidad en cuestión. Para señala las llaves primarias de cada una de las entidades se usa el tag `[PK]`, y para el caso de las llaves foráneas se usa la sintaxis `[FK <nombre de la entidad> <propiedad a la que hace referencia>]`
 
-![imag](2.png)
-
-<!--
 ```mermaid
 classDiagram
     Tienda ..|> Dirección : Esta en
@@ -102,9 +109,7 @@ classDiagram
         peso de la caja
         descripción
     }
-````
-
--->
+```
 
 ## Esquema Relacional
 
