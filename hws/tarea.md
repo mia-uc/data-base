@@ -113,60 +113,19 @@ classDiagram
 
 ## Esquema Relacional
 
-**Tienda**( \
-$\space\space$ tid `int PRIMARY KEY`, \
-$\space\space$ teléfono `string`, \
-$\space\space$ Comuna.comuna `string`, \
-$\space\space$ capacidad de estacionamiento `int`) \
-**Personal**( \
-$\space\space$ nombre `string`, \
-$\space\space$ rut `string PRIMARY KEY`, \
-$\space\space$ edad `int`, \
-$\space\space$ genero `string`, \
-$\space\space$ la fecha desde inicio `date`, \
-$\space\space$ Tienda.tid `int`) \
-**EsDirigidaPor**(\
-$\space\space$ Tienda.tid `int PRIMARY KEY`, \
-$\space\space$ Personal.rut `string`)\
-**Comuna**(
-$\space\space$ comuna `string PRIMARY KEY`,\
-$\space\space$ region `string`)
+**Tienda**(tid `int PRIMARY KEY`, teléfono `string`, Comuna.comuna `string`, capacidad de estacionamiento `int`) \
+**Personal**(nombre `string`, rut `string PRIMARY KEY`, edad `int`, genero `string`, la fecha desde inicio `date`, Tienda.tid `int`) \
+**EsDirigidaPor**(Tienda.tid `int PRIMARY KEY`, Personal.rut `string`)\
+**Comuna**(comuna `string PRIMARY KEY`, region `string`)
 
-**Producto**(
-$\space\space$ pid `int PRIMARY KEY`,\
-$\space\space$ nombre `string`,\
-$\space\space$ precio `float`,\
-$\space\space$ número de cajas `int`) \
-**Dormitorio**(\
-$\space\space$ Producto.pid `int PRIMARY KEY`,\
-$\space\space$ tamaño `float`,\
-$\space\space$ color `string`,\
-$\space\space$ descripción `string`) \
-**Iluminación**(\
-$\space\space$ Producto.pid `int PRIMARY KEY`,\
-$\space\space$ frecuencia `float`,\
-$\space\space$ color `string`,\
-$\space\space$ tensión `float`) \
-**Living**(\
-$\space\space$ Producto.pid `int PRIMARY KEY`,\
-$\space\space$ dimensiones `string`,\
-$\space\space$ material `string`,\
-$\space\space$ carga `string`)\
-**Caja**(\
-$\space\space$ cid `int PRIMARY KEY`,\
-$\space\space$ Producto.pid `int`,\
-$\space\space$ peso de la caja `float`,\
-$\space\space$ descripción `string`)
+**Producto**(pid `int PRIMARY KEY`, nombre `string`, precio `float`, número de cajas `int`) \
+**Dormitorio**(Producto.pid `int PRIMARY KEY`, tamaño `float`, color `string`, descripción `string`) \
+**Iluminación**(Producto.pid `int PRIMARY KEY`, frecuencia `float`, color `string`, tensión `float`) \
+**Living**(Producto.pid `int PRIMARY KEY`, dimensiones `string`, material `string`, carga `string`)\
+**Caja**(cid `int PRIMARY KEY`, Producto.pid `int`, peso de la caja `float`, descripción `string`)
 
-**Stock**(\
-$\space\space$ Tienda.tid `int PRIMARY KEY`,\
-$\space\space$ Producto.pid `int PRIMARY KEY`,\
-$\space\space$ cantidad `int`) \
-**Oferta**(\
-$\space\space$ oid `int PRIMARY KEY`,\
-$\space\space$ Tienda.tid `int`,\
-$\space\space$ Producto.pid `int`,\
-$\space\space$ porcentaje de descuento `float`)
+**Stock**(Tienda.tid `int PRIMARY KEY`, Producto.pid `int PRIMARY KEY`, cantidad `int`) \
+**Oferta**(oid `int PRIMARY KEY`, Tienda.tid `int`, Producto.pid `int`, porcentaje de descuento `float`)
 
 `Nota`: Nótese que al traducir el diagrama E/R al esquema relacional presenciamos la posibilidad de dos violaciones de las reglas del domino. En la interacción entre las entidades Tienda y Personal, con el esquema relacional presentado podría existir un jefe de una tienda que no trabaje en dicha tienda. Y la entidad Oferta tiene como llaves el id de la Tienda y del Producto, por tanto, es posible crear una oferta para un producto sin Stock.
 
